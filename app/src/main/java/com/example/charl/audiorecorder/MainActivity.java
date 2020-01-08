@@ -1,8 +1,6 @@
 package com.example.charl.audiorecorder;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
@@ -21,18 +19,14 @@ import android.widget.Toast;
 import android.widget.Chronometer;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView logo;
@@ -180,9 +174,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class send extends AsyncTask<Void,Void,Void> {
+    class send extends AsyncTask<Void, Void, String> {
         @Override
-        protected Void doInBackground(Void...params){
+        protected String doInBackground(Void...params){
             Socket sock = null;
             File myFile = new File(outputFile);
             try {
@@ -238,8 +232,7 @@ public class MainActivity extends AppCompatActivity {
 */
 
                 sock.close();
-                receive receivecode = new receive();
-                receivecode.execute();
+
             } catch (UnknownHostException e) {
                 System.out.println("Fail");
                 e.printStackTrace();
@@ -247,8 +240,17 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Fail2");
                 e.printStackTrace();
             }
+            try {
+                Thread.sleep(10000) ;
+            }  catch (InterruptedException e) {
+                // gestion de l'erreur
+            }
+            receive receivecode = new receive();
+            receivecode.execute();
             return null;
+
         }
+
     }
 
 
@@ -304,6 +306,8 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Fail2");
                 e.printStackTrace();
             }
+            Intent intent = new Intent(MainActivity.this, ShowPartition.class);
+            startActivity(intent);
             return null;
         }
     }

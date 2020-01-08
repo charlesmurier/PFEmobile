@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">audiorecorder</string>
+    <string name="title_activity_show_partition">showPartition</string>
 </resources>
