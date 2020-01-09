@@ -1,5 +1,6 @@
 package com.example.charl.audiorecorder;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -15,8 +16,10 @@ public class ShowPartition extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_partition);
+        Intent intent = getIntent();
+        String name = intent.getExtras().getString("name");
 
-        File imgFile = new  File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/result.png");
+        File imgFile = new  File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/partitions/"+name+".png");
         if(imgFile.exists()){
 
             Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -27,4 +30,5 @@ public class ShowPartition extends AppCompatActivity {
 
         };
     }
+
 }

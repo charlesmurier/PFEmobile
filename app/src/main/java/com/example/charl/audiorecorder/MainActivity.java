@@ -27,8 +27,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private String currentDateandTime;
     private ImageView logo;
     private ImageView play;
     private ProgressBar loading;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private String outputFile;
     private Chronometer chronometer;
     private Button Send;
+    private Button ListPartitions;
+
 
     private boolean recording = false;
     private boolean playing = false;
@@ -53,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler();
         Send = (Button) findViewById(R.id.send);
+        ListPartitions= (Button) findViewById(R.id.listpartitions);
+
         seekBar = (SeekBar) findViewById(R.id.seek_bar);
         logo = (ImageView) findViewById(R.id.logo);
         play = (ImageView) findViewById(R.id.play);
@@ -73,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
                 sendcode.execute();
             }
         });
+
+        ListPartitions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListPartitions.class);
+                startActivity(intent);
+            }
+        });
+
 
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,8 +282,11 @@ public class MainActivity extends AppCompatActivity {
 
                 DataInputStream dis = new DataInputStream(sock.getInputStream());
                 System.out.println("222222222222222");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
 
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/result.png";
+
+                currentDateandTime = sdf.format(new Date());
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/partitions/"+ currentDateandTime + ".png";
                 File f = new File(filePath);
 
                 FileOutputStream fos = new FileOutputStream(f, false);
@@ -307,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Intent intent = new Intent(MainActivity.this, ShowPartition.class);
+            intent.putExtra("name", currentDateandTime);
             startActivity(intent);
             return null;
         }
