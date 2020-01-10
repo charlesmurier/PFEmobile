@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(10000) ;
+                Thread.sleep(3000) ;
             }  catch (InterruptedException e) {
                 // gestion de l'erreur
             }

@@ -18,7 +18,6 @@ public class ListPartitions extends AppCompatActivity {
     ArrayList<String> files;
     ListView listView ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ShowPartition">
 
 
     <ImageView
         android:id="@+id/partition"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="410dp"
         app:srcCompat="@android:color/darker_gray"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="67dp" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Supprimer" />
+
+    <Button
+        android:id="@+id/rename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Renommer" />
+
 </LinearLayout>
