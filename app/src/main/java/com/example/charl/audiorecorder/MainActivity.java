@@ -1,5 +1,7 @@
 package com.example.charl.audiorecorder;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -12,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,17 +35,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import pl.droidsonroids.gif.GifImageView;
+
 public class MainActivity extends AppCompatActivity {
     private String currentDateandTime;
     private ImageView logo;
     private ImageView play;
+    private GifImageView gif;
     private ProgressBar loading;
     private MediaRecorder myAudioRecorder;
     private String outputFile;
     private Chronometer chronometer;
     private Button Send;
     private Button ListPartitions;
-
+    private LinearLayout mediaplayer;
+    ProgressDialog progress;
 
     private boolean recording = false;
     private boolean playing = false;
@@ -50,33 +58,37 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private TextView time;
+    RelativeLayout lay1, lay2;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        progress= new ProgressDialog(this);
+        mediaplayer = (LinearLayout) findViewById(R.id.mediaplayer);
         handler = new Handler();
         Send = (Button) findViewById(R.id.send);
         ListPartitions= (Button) findViewById(R.id.listpartitions);
-
+        gif = (GifImageView) findViewById(R.id.gif);
         seekBar = (SeekBar) findViewById(R.id.seek_bar);
         logo = (ImageView) findViewById(R.id.logo);
         play = (ImageView) findViewById(R.id.play);
         time= (TextView) findViewById(R.id.time);
         loading = (ProgressBar) findViewById(R.id.loading);
         mediaPlayer = new MediaPlayer();
-        loading.setVisibility(View.GONE);
-        play.setVisibility(View.GONE);
-        seekBar.setVisibility(View.GONE);
-        time.setVisibility(View.GONE);
+        mediaplayer.setVisibility(View.GONE);
         chronometer = findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
 
         Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.setTitle("Loading");
+                progress.setMessage("Wait while loading...");
+                progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+                progress.show();
                 send sendcode = new send();
                 sendcode.execute();
             }
@@ -98,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         chronometer.setBase(SystemClock.elapsedRealtime());
                         chronometer.start();
-                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/record.m4a";
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault());
+                        currentDateandTime = sdf.format(new Date());
+                        outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording/"+currentDateandTime+".m4a";
                         myAudioRecorder = new MediaRecorder();
                         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
                         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -111,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException ioe) {
                         // make something
                     }
-                    loading.setVisibility(View.VISIBLE);
+                    //loading.setVisibility(View.VISIBLE);
+                    gif.setVisibility(View.VISIBLE);
                     Toast.makeText(getApplicationContext(), "Enregistrement débuté", Toast.LENGTH_LONG).show();
                     recording = true;
                 }
@@ -120,10 +135,9 @@ public class MainActivity extends AppCompatActivity {
                     myAudioRecorder.stop();
                     myAudioRecorder.release();
                     myAudioRecorder = null;
-                    play.setVisibility(View.VISIBLE);
-                    seekBar.setVisibility(View.VISIBLE);
-                    time.setVisibility(View.VISIBLE);
+                    mediaplayer.setVisibility(View.VISIBLE);
                     loading.setVisibility(View.GONE);
+                    gif.setVisibility(View.GONE);
                     recording = false;
                     Toast.makeText(getApplicationContext(), "Audio bien enregistré", Toast.LENGTH_LONG).show();
                     mediaPlayer = new MediaPlayer();
@@ -206,48 +220,6 @@ public class MainActivity extends AppCompatActivity {
                 os.write(mybytearray, 0, mybytearray.length);
                 System.out.println(mybytearray);
                 os.flush();
-
-/*
-                System.out.println("111111111111111111");
-
-                DataInputStream dis = new DataInputStream(sock.getInputStream());
-                System.out.println("222222222222222");
-
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/fileName.jpg";
-                File f = new File(filePath);
-
-                FileOutputStream fos = new FileOutputStream(f, false);
-                System.out.println("3333333333333");
-
-                byte[] buffer = new byte[4096];
-                System.out.println("4444444444444444");
-
-                int filesize = 200123000; // Send file size in separate msg
-                System.out.println("555555555555555555");
-
-                int read = 0;
-                System.out.println("66666666666666");
-
-                int totalRead = 0;
-                System.out.println("777777777777");
-
-                int remaining = filesize;
-
-                System.out.println("8888888888");
-                while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
-                    totalRead += read;
-                    remaining -= read;
-                    System.out.println("read " + totalRead + " bytes.");
-                    fos.write(buffer, 0, read);
-                }
-                System.out.println("99999999999999");
-
-
-                fos.close();
-                dis.close();
-
-*/
-
                 sock.close();
 
             } catch (UnknownHostException e) {
@@ -258,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             try {
-                Thread.sleep(3000) ;
+                Thread.sleep(6000) ;
             }  catch (InterruptedException e) {
                 // gestion de l'erreur
             }
@@ -282,10 +254,8 @@ public class MainActivity extends AppCompatActivity {
 
                 DataInputStream dis = new DataInputStream(sock.getInputStream());
                 System.out.println("222222222222222");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
-
-
-                currentDateandTime = sdf.format(new Date());
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
+                //currentDateandTime = sdf.format(new Date());
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/partitions/"+ currentDateandTime + ".png";
                 File f = new File(filePath);
 
@@ -326,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Fail2");
                 e.printStackTrace();
             }
+            progress.dismiss();
             Intent intent = new Intent(MainActivity.this, ShowPartition.class);
             intent.putExtra("name", currentDateandTime);
             startActivity(intent);
@@ -343,10 +314,10 @@ public class MainActivity extends AppCompatActivity {
                     changeSeekBar();
                 }
             };
-            handler.postDelayed(runnable, 500);
+            handler.postDelayed(runnable, 10);
         }
 
-        if (mediaPlayer.getCurrentPosition() == mediaPlayer.getDuration()){
+        if (mediaPlayer.getCurrentPosition() >= mediaPlayer.getDuration()){
             seekBar.setProgress(0);
             time.setText("00:00/"+getTimeString(mediaPlayer.getDuration()));
             play.setImageResource(R.drawable.play);

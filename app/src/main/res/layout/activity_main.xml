@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#20424E"
     tools:context="com.example.charl.audiorecorder.MainActivity">
 
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/logorecord"
-        android:id="@+id/logo"/>
+        android:gravity="center|top"
+        android:orientation="horizontal">
 
-    <ProgressBar
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
-        android:id="@+id/loading"
-        android:indeterminateTint="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/listpartitions"
+            android:padding="10dp"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/start_wrapmusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:textColor="#20424E"
+            android:text="partitions" />
 
+
+        <Button
+            android:id="@+id/recorder"
+            android:drawableTop="@drawable/start_wrap"
+            android:padding="10dp"
+
+            android:drawablePadding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:text="Recorder" />
+
+    </LinearLayout>
 
     <Chronometer
         android:id="@+id/chronometer"
@@ -32,56 +49,119 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-258dp"
-        android:textSize="12sp" />
+        android:layout_marginBottom="-185dp"
+        android:textSize="80sp"
+        android:textColor="#FCFFFF"/>
+
 
     <ImageView
-        android:id="@+id/play"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_above="@id/chronometer"
+        android:id="@+id/logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="-99dp"
-        android:background="@drawable/circle"
-        android:src="@drawable/play"
-        android:textColor="#fff" />
+        android:layout_marginTop="166dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/source" />
 
-    <SeekBar
-        android:id="@+id/seek_bar"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="166dp"
+        android:src="@drawable/source"
+        android:visibility="gone"
+        />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="166dp"
+        android:indeterminateTint="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:indeterminateDrawable="@drawable/progress_circle"
+        android:visibility="gone"/>
+
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/mediaplayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="142dp" />
+        android:layout_marginTop="0dp"
+        android:gravity="center|center"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center|center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_margin="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/play"
+                android:textColor="#fff"/>
+
+            <SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:outlineSpotShadowColor="#20424E"
+                android:outlineAmbientShadowColor="#20424E"
+                android:layout_weight="3"/>
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#20424E"
+                android:text="TextView"/>
+
+
+        </LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="Voir la partition" />
+
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="107dp"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
-        android:text="Send" />
-
-    <Button
-        android:id="@+id/listpartitions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/send"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
-        android:text="partitions" />
+        android:layout_marginTop="-50dp"
+        android:text="Touchez l'oiseau pour enregistrer"
+        android:textColor="#FFFFFF"/>
 
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,12 +18,14 @@ public class ListPartitions extends AppCompatActivity {
 
     ArrayList<String> files;
     ListView listView ;
+    Button recorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_partitions);
         listView = (ListView) findViewById(R.id.listView);
+        recorder = (Button) findViewById(R.id.recorder);
         getList();
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, files);
@@ -33,6 +36,15 @@ public class ListPartitions extends AppCompatActivity {
                 String clickedItem=(String) listView.getItemAtPosition(position);
                 Intent intent = new Intent(ListPartitions.this, ShowPartition.class);
                 intent.putExtra("name", clickedItem);
+                startActivity(intent);
+            }
+        });
+
+
+        recorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListPartitions.this, MainActivity.class);
                 startActivity(intent);
             }
         });
