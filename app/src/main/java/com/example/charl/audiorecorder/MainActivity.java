@@ -256,7 +256,9 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("222222222222222");
                 //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault());
                 //currentDateandTime = sdf.format(new Date());
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/partitions/"+ currentDateandTime + ".png";
+                //String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/partitions/"+ currentDateandTime + ".png";
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/result.pdf";
+
                 File f = new File(filePath);
 
                 FileOutputStream fos = new FileOutputStream(f, false);
@@ -297,8 +299,12 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             progress.dismiss();
-            Intent intent = new Intent(MainActivity.this, ShowPartition.class);
-            intent.putExtra("name", currentDateandTime);
+            //Intent intent = new Intent(MainActivity.this, ShowPartition.class);
+            //intent.putExtra("name", currentDateandTime);
+            //startActivity(intent);
+
+            Intent intent = new Intent(MainActivity.this, ShowPDF.class);
+            //intent.putExtra("name", currentDateandTime);
             startActivity(intent);
             return null;
         }

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#20424E"
     tools:context="com.example.charl.audiorecorder.MainActivity">
 
     <LinearLayout
@@ -51,18 +50,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-185dp"
         android:textSize="80sp"
-        android:textColor="#FCFFFF"/>
+        android:textColor="#20424E"/>
 
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="166dp"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/source" />
+
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif"
@@ -70,10 +61,20 @@
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="166dp"
-        android:src="@drawable/source"
+        android:layout_marginTop="196dp"
+        android:src="@drawable/loading"
         android:visibility="gone"
         />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="247dp"
+        android:layout_marginBottom="125dp"
+        android:src="@drawable/logoappli" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -161,7 +162,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-50dp"
         android:text="Touchez l'oiseau pour enregistrer"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#20424E"/>
 
 
 </RelativeLayout>

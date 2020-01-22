@@ -22,7 +22,7 @@ public class Intro extends AppCompatActivity {
 
             }
 
-        }, 2000);
+        }, 2300);
     }
 
 }
